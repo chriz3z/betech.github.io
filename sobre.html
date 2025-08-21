@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BE.TECH</title>
+  <meta name="description" content="Informações sobre o grupo, o propósito da apresentação e a área de desenvolvimento de software." />
+  <style>
+    :root{
+      --bg: #0a0c10;
+      --panel: #111520;
+      --muted: #9aa3b2;
+      --text: #e6e9ef;
+      --brand: #5eead4;
+      --brand-2: #60a5fa;
+      --ok: #86efac;
+      --warn: #fde68a;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --maxw: 1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text); background: radial-gradient(1200px 600px at 20% -10%, rgba(94,234,212,.16), transparent 60%),
+                       radial-gradient(900px 400px at 110% 10%, rgba(96,165,250,.18), transparent 60%), var(--bg);
+      overflow-x: hidden;
+    }
+    a{color:inherit}
+    .container{max-width: var(--maxw); margin: 0 auto; padding: 0 24px}
+    .btn{
+      display:inline-block; padding:12px 20px; border-radius:999px; background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:var(--bg); font-weight:700; text-decoration:none; box-shadow: var(--shadow);
+    }
+
+    header{position:sticky; top:0; backdrop-filter: blur(8px); background: rgba(10,12,16,.6); border-bottom: 1px solid rgba(255,255,255,.06); z-index:10}
+    header .wrap{display:flex; align-items:center; gap:20px; padding:14px 0}
+    .logo-link {
+        display: flex;
+        align-items: center;
+        gap: 15px; 
+        font-weight: 800;
+        text-decoration: none;
+        color: var(--text);
+        margin-left: 10px;
+    }
+    .logo-link:hover {opacity: 0.85;}
+    .logo-link svg {width: 36px; height: 36px;}
+    .logo-link span {font-size: 24px;}
+    nav{margin-left:auto}
+    nav a{opacity:.85; text-decoration:none; margin:0 10px}
+    nav a:hover{opacity:1}
+
+    .hero{padding: 72px 0 40px; text-align: center;}
+    .hero h1{font-size: clamp(28px, 5vw, 48px); line-height:1.15; margin: 14px 0 10px}
+    .hero h1 span{
+      background: linear-gradient(90deg,var(--brand),var(--brand-2)); 
+      -webkit-background-clip: text; 
+      background-clip: text; 
+      color: transparent;
+    }
+    .lead{color: var(--muted); max-width: 60ch; margin: 0 auto;}
+    .k{color: var(--muted)}
+
+    footer{padding:36px 0 56px; color: var(--muted); text-align: center;}
+
+    @media (max-width: 900px){
+      .hero .grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr 1fr}
+      .callout{grid-template-columns:1fr}
+    }
+    @media (max-width: 600px) {
+        header .wrap {flex-direction: column; align-items: center; gap: 10px;}
+        .logo-link {margin-left: 0;}
+        nav {margin-left: 0; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;}
+        nav a {margin: 0; padding: 5px 10px;}
+    }
+
+    /* Animação fade-in-up */
+    .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Barra de navegação" class="fade-in-up">
+    <div class="container wrap">
+      <a class="logo-link" href="site_desenvolvedor_de_software_html.html">
+        <div class="logo" aria-label="Identidade do site">
+          <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="gradient-logo" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--brand);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:var(--brand-2);stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M5 23L23 5M5 14L23 14M5 5L23 23" stroke="url(#gradient-logo)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BE.TECH</span>
+        </div>
+      </a>
+      <nav aria-label="Seções do site" class="fade-in-up">
+        <a href="site_desenvolvedor_de_software_html.html">Sobre</a>
+        <a href="site_desenvolvedor_de_software_html.html">Habilidades</a>
+        <a href="site_desenvolvedor_de_software_html.html">Fluxo</a>
+        <a href="site_desenvolvedor_de_software_html.html">Arquitetura</a>
+        <a href="site_desenvolvedor_de_software_html.html">Ferramentas</a>
+        <a href="site_desenvolvedor_de_software_html.html">Carreira</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero">
+      <div class="container">
+        <h1 class="fade-in-up">Sobre a <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent">apresentação</span></h1>
+        <p class="lead fade-in-up">
+          Nosso grupo é formado por 5 desenvolvedores, onde apresentamos como é trabalhar 
+          com o Desenvolvimento de Software/Back-end, e como essa área é ampla no mundo da tecnologia 
+          e necessária.
+        </p>
+        <p class="k fade-in-up" style="margin-top: 2rem;">
+          Beatriz L. Angelina B. Isabella B. Marianne J. Carol, 1°E.M dirigido por Rodrigo Leite.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fade-in-up">
+    <div class="container">
+      <p>© <span id="ano"></span>Guia BE.TEC — Desenvolvedor de Software. Construído apenas com HTML, CSSE SCRIPT. ~CHZ <span class="k">Leve, acessível e focado em conteúdo.</span></p>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza o ano automaticamente
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Aplica animação fade-in-up gradual
+    window.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.fade-in-up');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, index * 300); // atraso de 300ms entre cada elemento
+      });
+    });
+  </script>
+</body>
+</html>

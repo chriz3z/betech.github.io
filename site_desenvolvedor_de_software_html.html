@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BE.TECH</title>
+  <meta name="description" content="O que faz um desenvolvedor de software: áreas de atuação, habilidades essenciais, ferramentas e caminhos de carreira. Minimalista, acessível e performático." />
+  <style>
+    /* Variáveis CSS para o tema teal e azul */
+    :root{
+      --bg: #0a0c10;
+      --panel: #111520;
+      --muted: #9aa3b2;
+      --text: #e6e9ef;
+      --brand: #5eead4; /* teal */
+      --brand-2: #60a5fa; /* blue */
+      --ok: #86efac;
+      --warn: #fde68a;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --maxw: 1120px;
+    }
+    
+    /* Reset e estilos base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(94,234,212,.16), transparent 60%),
+        radial-gradient(900px 400px at 110% 10%, rgba(96,165,250,.18), transparent 60%),
+        var(--bg);
+      overflow-x: hidden; /* Evita a barra de rolagem horizontal em elementos animados */
+    }
+    a{color:inherit}
+    .container{max-width: var(--maxw); margin: 0 auto; padding: 0 24px}
+    .btn{
+      display:inline-block; padding:12px 20px; border-radius:999px; background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#071018; font-weight:700; text-decoration:none; box-shadow: var(--shadow);
+    }
+    
+    /* Header */
+    header{position:sticky; top:0; backdrop-filter: blur(8px); background: rgba(10,12,16,.6); border-bottom: 1px solid rgba(255,255,255,.06); z-index:10}
+    header .wrap{display:flex; align-items:center; gap:20px; padding:14px 0}
+    .logo-link {
+        display: flex;
+        align-items: center;
+        /* Espaçamento entre o ícone e o texto da logo */
+        gap: 15px; 
+        font-weight: 800;
+        text-decoration: none;
+        color: var(--text);
+        /* Margem para afastar da borda */
+        margin-left: 10px;
+    }
+    .logo-link:hover {
+        opacity: 0.85;
+    }
+    /* Estilo para aumentar o tamanho do texto da logo */
+    .logo-link span {
+        font-size: 24px;
+    }
+    nav{margin-left:auto}
+    nav a{opacity:.85; text-decoration:none; margin:0 10px}
+    nav a:hover{opacity:1}
+
+    /* Animações de barras */
+    @keyframes bar-anim {
+        0% { transform: scaleX(0.7); }
+        50% { transform: scaleX(1); }
+        100% { transform: scaleX(0.7); }
+    }
+    .hero-illus .bar {
+        transform-origin: left;
+        animation: bar-anim 3s ease-in-out infinite;
+    }
+    .hero-illus .bar:nth-child(1) { animation-delay: 0s; }
+    .hero-illus .bar:nth-child(2) { animation-delay: 0.5s; }
+    .hero-illus .bar:nth-child(3) { animation-delay: 1s; }
+
+    /* Efeito de fade-in e scroll */
+    .hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Hero section */
+    .hero{padding: 72px 0 40px}
+    .hero .grid{display:grid; gap:24px; grid-template-columns: 1.1fr .9fr}
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: rgba(94,234,212,.12); color: var(--brand)}
+    h1{font-size: clamp(28px, 5vw, 48px); line-height:1.15; margin: 14px 0 10px}
+    .lead{color: var(--muted); max-width: 60ch}
+    .hero-card{background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); padding:22px; border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column;}
+    .hero-illus{display:grid; gap:16px}
+    .frame{background: var(--panel); border:1px solid rgba(255,255,255,.08); border-radius: 12px; padding:12px}
+    .bar{height:10px; border-radius:6px; background:linear-gradient(90deg,var(--brand),var(--brand-2)); opacity:.9}
+    
+    /* Estilos para o campo de input interativo */
+    #impacto-content {
+        margin-top: 10px;
+        color: var(--muted);
+        min-height: 50px;
+        font-size: 14px;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Estilo para a animação do input */
+    .tools-interactive .tag {
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .tools-interactive .tag.active {
+        background-color: var(--brand);
+        color: var(--bg);
+        box-shadow: 0 0 15px var(--brand);
+    }
+
+
+    /* Sections compartilhadas */
+    section{padding:56px 0}
+    h2{font-size: clamp(22px, 3.5vw, 32px); margin:0 0 18px}
+    .k{color: var(--muted)}
+    .grid-3{display:grid; gap:18px; grid-template-columns: repeat(3, minmax(0,1fr))}
+    .card{background: var(--panel); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding:18px; box-shadow: var(--shadow)}
+    .card h3{margin:0 0 8px; font-size:20px}
+    .tag{display:inline-block; font-size:12px; padding:4px 10px; border-radius:999px; background: rgba(255,255,255,.06); color: var(--muted); margin-right:6px}
+
+    /* Workflow */
+    .steps{display:grid; gap:12px; grid-template-columns: repeat(5, minmax(0,1fr))}
+    .step{position:relative; padding:16px; background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:14px}
+    .step::before{content: attr(data-n); position:absolute; inset:auto auto 100% 0; transform: translateY(-8px); font-weight:700; color: var(--brand)}
+
+    /* Tools list */
+    .tools{display:flex; flex-wrap:wrap; gap:8px}
+
+    /* Bloco de acessibilidade */
+    .callout{display:grid; gap:16px; grid-template-columns: .9fr 1.1fr; align-items:center; background: linear-gradient(90deg, rgba(96,165,250,.15), rgba(94,234,212,.08)); padding:20px; border:1px solid rgba(255,255,255,.12); border-radius:16px}
+
+    /* Footer */
+    footer{padding:36px 0 56px; color: var(--muted); text-align: center;}
+
+    /* Responsividade */
+    @media (max-width: 900px){
+      .hero .grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr 1fr}
+      .callout{grid-template-columns:1fr}
+    }
+    
+    /* Responsividade específica para o cabeçalho em telas menores */
+    @media (max-width: 600px) {
+        header .wrap {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        nav {
+            margin-left: 0;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        nav a {
+            margin: 0;
+            padding: 5px 10px;
+        }
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Barra de navegação">
+    <div class="container wrap">
+      <!-- O logo agora é um link <a> que aponta para a página principal -->
+      <a class="logo-link" href="site_desenvolvedor_de_software_html.html">
+        <div class="logo" aria-label="Identidade do site">
+          <!-- SVG da nova logo com gradiente -->
+          <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="gradient-logo" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--brand);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:var(--brand-2);stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M5 23L23 5M5 14L23 14M5 5L23 23" stroke="url(#gradient-logo)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BE.TECH</span>
+        </div>
+      </a>
+      <nav aria-label="Seções do site">
+        <a href="sobre.html">Sobre</a>
+        <a href="#areas">Áreas</a>
+        <a href="#habilidades">Habilidades</a>
+        <a href="#fluxo">Fluxo</a>
+        <a href="#ferramentas">Ferramentas</a>
+        <a href="#carreira">Carreira</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="sobre">
+      <div class="container grid">
+        <div>
+          <span class="badge" aria-label="Foco do conteúdo">💡 Produto • 💻 Código • ☁️ Cloud • ♿ Acessibilidade</span>
+          <h1>O que faz um <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent">Desenvolvedor de Software</span></h1>
+          <p class="lead">Desenvolvedores criam sistemas que resolvem problemas reais — de apps móveis a plataformas web e serviços em nuvem. Combinam lógica, design e colaboração para entregar soluções <strong>rápidas, seguras e acessíveis</strong>.</p>
+          <p class="k">Este guia resume áreas de atuação, competências, fluxo de trabalho, ferramentas e caminhos para crescimento na carreira — mantendo o minimalismo e foco em performance.</p>
+          <p><a class="btn" href="#carreira">Quero seguir essa carreira</a></p>
+        </div>
+        <div class="hero-illus" aria-hidden="true">
+          <div class="hero-card">
+            <strong>Onde o software impacta</strong>
+            <div class="tools tools-interactive" style="margin-top:10px">
+              <span class="tag" data-impacto="saude">Saúde</span>
+              <span class="tag" data-impacto="educacao">Educação</span>
+              <span class="tag" data-impacto="financas">Finanças</span>
+              <span class="tag" data-impacto="industria">Indústria</span>
+              <span class="tag" data-impacto="entretenimento">Entretenimento</span>
+            </div>
+            <div id="impacto-content">Clique em um tema para ver como o software impacta essa área.</div>
+          </div>
+          <div class="frame">
+            <div class="bar" style="width:78%"></div>
+            <div class="bar" style="width:55%; margin-top:8px"></div>
+            <div class="bar" style="width:92%; margin-top:8px"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="areas" class="hidden">
+      <div class="container">
+        <h2 style="margin-bottom: 2rem;">Áreas de atuação</h2>
+        <p class="k">O campo é amplo. Você pode especializar-se ou transitar entre áreas.</p>
+        <div class="grid-3" role="list">
+          <article class="card" role="listitem">
+            <h3>Front‑End</h3>
+            <p>Interfaces web rápidas e acessíveis (HTML, CSS, JS/TS). Frameworks como React, Vue ou Svelte.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Back‑End</h3>
+            <p>APIs, regras de negócio e bancos de dados. Node.js, Java, Python, C#, Go; REST/GraphQL; SQL/NoSQL.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Mobile</h3>
+            <p>Apps nativos ou multiplataforma (Kotlin/Swift, Flutter, React Native) com foco em UX e performance.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Dados & IA</h3>
+            <p>ETL, análise, machine learning e MLOps. Python, R, pipelines e modelos para decisões melhores.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>DevOps & Cloud</h3>
+            <p>Infra como código, CI/CD, observabilidade e escalabilidade em AWS/Azure/GCP.
+            </p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>QA & Testes</h3>
+            <p>Garantia de qualidade com testes unitários, integração e end‑to‑end, além de automação.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="habilidades" class="hidden">
+      <div class="container">
+        <h2 style="margin-bottom: 2rem;">Habilidades essenciais</h2>
+        <p class="k">Fundamentos sólidos aceleram qualquer stack.</p>
+        <div class="grid-3" role="list">
+          <article class="card" role="listitem">
+            <h3>Lógica & Estruturas</h3>
+            <p>Algoritmos, estruturas de dados, complexidade e resolução de problemas.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Arquitetura</h3>
+            <p>Camadas, modularização, padrões (MVC, Clean, DDD), APIs bem definidas e documentação.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Versionamento</h3>
+            <p>Git/GitHub, PRs, code review, convenções (lint/format) e branch strategy.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Testes</h3>
+            <p>Unitário, integração e E2E com cobertura adequada e pirâmide de testes.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Segurança</h3>
+            <p>Autenticação/autorização, OWASP Top 10, gestão de segredos e proteção de dados.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Observabilidade</h3>
+            <p>Logs, métricas e tracing para detectar, medir e melhorar o sistema em produção.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="fluxo" class="hidden">
+      <div class="container">
+        <h2 style="margin-bottom: 2rem;">Fluxo de trabalho de um projeto</h2>
+        <div class="steps" role="list">
+          <div class="step" role="listitem" data-n="1. Descoberta">
+            <strong>Problema & Público</strong>
+            <p class="k">Entender dores, objetivos, métricas e riscos.</p>
+          </div>
+          <div class="step" role="listitem" data-n="2. Arquitetura">
+            <strong>Design Técnico</strong>
+            <p class="k">Escolha de stack, modelagem de dados, contratos de API e padrões.</p>
+          </div>
+          <div class="step" role="listitem" data-n="3. Implementação">
+            <strong>Código & Revisão</strong>
+            <p class="k">Desenvolver com testes, automações e boas práticas.</p>
+          </div>
+          <div class="step" role="listitem" data-n="4. Qualidade">
+            <strong>Testes & Segurança</strong>
+            <p class="k">Validação funcional, carga/perf e checklist de segurança.</p>
+          </div>
+          <div class="step" role="listitem" data-n="5. Operação">
+            <strong>Deploy & Observabilidade</strong>
+            <p class="k">CI/CD, monitoramento, feedback contínuo e melhorias.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ferramentas" class="hidden">
+      <div class="container">
+        <h2 style="margin-bottom: 2rem;">Ferramentas do dia a dia</h2>
+        <div class="grid-3">
+          <article class="card" role="listitem">
+            <h3>Linguagens</h3>
+            <p class="k">JavaScript, Python, Java, C, C++, C#, PHP, Ruby, Go, Rust, Swift, Kotlin, TypeScript, Dart… 
+            mais de 100 linguagens possiveis.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Frameworks</h3>
+            <p class="k">React/Vue, Node/Express, Spring, .NET, Django/FastAPI, Flutter.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Qualidade & DevOps</h3>
+            <p class="k">GitHub, Docker, CI/CD, testes (Jest/RTL, JUnit, PyTest), monitoramento (logs, métricas).</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="carreira" class="hidden">
+      <div class="container">
+        <h2 style="margin-bottom: 2rem;">Caminhos de carreira</h2>
+        <div class="grid-3" role="list">
+          <article class="card" role="listitem">
+            <h3>Júnior</h3>
+            <p>Foco nos fundamentos, escrevendo código limpo, e aprendendo o fluxo de desenvolvimento em equipe.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Pleno</h3>
+            <p>Contribui de forma autônoma, participa de decisões de arquitetura e atua na mentoria de juniores.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Sênior</h3>
+            <p>Lidera o design de sistemas, define padrões técnicos e resolve problemas complexos na arquitetura.</p>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>Primeiros passos práticos</h3>
+          <ol class="k" style="margin-top:8px">
+            <li>Implemente uma API simples (CRUD) e um cliente web consumindo-a.</li>
+            <li>Adicione testes, dockerize o projeto e configure CI para rodá-los.</li>
+            <li>Publique (cloud gratuita) e monitore logs/métricas básicas.</li>
+          </ol>
+          <p style="margin:10px 0 0"><a class="btn" href="#">Ver exemplos de projetos</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="ano"></span> Guia BE.TEC — Desenvolvedor de Software. Construído apenas com HTML, CSSE SCRIPT. ~CHZ <span class="k">Leve, acessível e focado em conteúdo.</span></p>
+    </div>
+  </footer>
+
+  <script>
+    // Acessibilidade/UX: atualiza ano automaticamente, sem dependências.
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Lógica para a seção de impacto interativa
+    const impactoTags = document.querySelectorAll('.tools-interactive .tag');
+    const impactoContent = document.getElementById('impacto-content');
+
+    const descricoes = {
+        saude: 'Criação de prontuários eletrônicos, apps de telemedicina e sistemas de gestão hospitalar, otimizando o cuidado ao paciente.',
+        educacao: 'Desenvolvimento de plataformas EAD, ferramentas de avaliação online e aplicativos de aprendizado gamificados para alunos.',
+        financas: 'Automação de processos bancários, criação de apps de investimento, sistemas de segurança para transações e fintechs inovadoras.',
+        industria: 'Programação de robôs, sistemas de automação de fábrica (Indústria 4.0), controle de qualidade e softwares de gerenciamento de produção.',
+        entretenimento: 'Criação de jogos, plataformas de streaming de vídeo e música, e efeitos visuais em filmes e animações.'
+    };
+
+    impactoTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            // Remove a classe 'active' de todas as tags
+            impactoTags.forEach(t => t.classList.remove('active'));
+            
+            // Adiciona a classe 'active' na tag clicada
+            tag.classList.add('active');
+            
+            // Exibe a descrição correspondente
+            const area = tag.dataset.impacto;
+            impactoContent.textContent = descricoes[area];
+        });
+    });
+
+    // Lógica para animação de scroll (fade-in)
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); // Deixa de observar depois de aparecer
+        }
+      });
+    }, {
+      rootMargin: '0px',
+      threshold: 0.1 // O elemento se torna visível quando 10% dele está na tela
+    });
+
+    // Observa todas as seções (exceto a primeira, que já está visível)
+    const sections = document.querySelectorAll('section');
+    sections.forEach((section, index) => {
+        if (index > 0) { // A primeira seção não precisa de animação de scroll, ela carrega com o resto da página
+            section.classList.add('hidden');
+            observer.observe(section);
+        }
+    });
+
+    // Animação de carregamento (de baixo para cima)
+    window.addEventListener('DOMContentLoaded', () => {
+        const header = document.querySelector('header');
+        const heroSection = document.querySelector('.hero');
+        const footer = document.querySelector('footer');
+
+        // Adiciona classe de animação aos elementos
+        header.classList.add('visible');
+        heroSection.classList.add('visible');
+        
+        // As demais seções serão animadas pelo IntersectionObserver
+    });
+
+  </script>
+</body>
+</html>
