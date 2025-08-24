@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Biologia Digital</title>
+  <meta name="description" content="Um quiz interativo sobre a história do Projeto Genoma Humano e o poder da troca de dados." />
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --panel: #111520;
+      --muted: #9aa3b2;
+      --text: #e6e9ef;
+      --brand: #5eead4;
+      --brand-2: #60a5fa;
+      --ok: #86efac;
+      --warn: #fde68a;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      --maxw: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(94, 234, 212, 0.16), transparent 60%),
+                  radial-gradient(900px 400px at 110% 10%, rgba(96, 165, 250, 0.18), transparent 60%), var(--bg);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color: var(--bg);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      background: rgba(10, 12, 16, 0.6);
+      z-index: 10;
+    }
+
+    header .wrap {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text);
+      margin-left: 10px;
+    }
+
+    .logo-link:hover {
+      opacity: 0.85;
+    }
+
+    .logo-link svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .logo-link span {
+      font-size: 24px;
+    }
+
+    nav {
+      margin-left: auto;
+    }
+
+    nav a {
+      opacity: 0.85;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    nav a:hover {
+      opacity: 1;
+    }
+
+    .hero {
+      padding: 72px 0 40px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.15;
+      margin: 14px 0 10px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--muted);
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+
+    .k {
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 60px 0 80px; /* Aumentado o espaçamento superior e inferior */
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero .grid {
+        grid-template-columns: 1fr;
+      }
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+      .callout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header .wrap {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-link {
+        margin-left: 0;
+      }
+      nav {
+        margin-left: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      nav a {
+        margin: 0;
+        padding: 5px 10px;
+      }
+    }
+
+    /* Animação fade-in-up */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Estilos do quiz */
+    .quiz-container {
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .quiz-box {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-box h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    #answer-buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    #answer-buttons .btn {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      font-weight: 500;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    #answer-buttons .btn:hover:not([disabled]) {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    #answer-buttons .btn.correct {
+      background: var(--ok);
+      color: var(--bg);
+      border: 1px solid var(--ok);
+    }
+
+    #answer-buttons .btn.incorrect {
+      background: var(--warn);
+      color: var(--bg);
+      border: 1px solid var(--warn);
+    }
+
+    #next-btn {
+      margin-top: 20px;
+      background: var(--brand-2);
+      color: var(--bg);
+      font-weight: 700;
+      width: 100%;
+      display: none;
+      box-shadow: var(--shadow);
+    }
+
+    #next-btn:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Barra de navegação" class="fade-in-up">
+    <div class="container wrap">
+      <a class="logo-link" href="betech.html">
+        <div class="logo" aria-label="Identidade do site">
+          <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="gradient-logo" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:var(--brand);stop-opacity:1" />
+                <stop offset="100%" style="stop-color:var(--brand-2);stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path d="M5 23L23 5M5 14L23 14M5 5L23 23" stroke="url(#gradient-logo)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BE.TECH</span>
+        </div>
+      </a>
+      <nav aria-label="Seções do site" class="fade-in-up">
+        <a href="betech.html">Início</a>
+        <a href="quizz.html">Quiz</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero fade-in-up">
+      <div class="container">
+        <h1><span>Quiz</span> de Biologia Digital</h1>
+        <p class="lead">Teste seus conhecimentos sobre o Projeto Genoma Humano e a importância da troca de dados.</p>
+      </div>
+    </section>
+
+    <section class="container quiz-container fade-in-up" id="quiz-section">
+      <div class="quiz-box">
+        <h2 id="question-text"></h2>
+        <div id="answer-buttons" class="btn-grid">
+          <button class="btn">Resposta A</button>
+          <button class="btn">Resposta B</button>
+          <button class="btn">Resposta C</button>
+          <button class="btn">Resposta D</button>
+        </div>
+        <button id="next-btn" class="btn">Próxima</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fade-in-up">
+    <div class="container">
+      <p>© <span id="ano"></span> Guia BE.TEC — Desenvolvedor de Software. Construído apenas com HTML, CSS E SCRIPT. Leve, acessível e focado em conteúdo.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza o ano automaticamente
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Aplica animação fade-in-up gradual
+    window.addEventListener('DOMContentLoaded', () => {
+      const elements = document.querySelectorAll('.fade-in-up');
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, index * 300);
+      });
+    });
+
+    const questions = [
+      {
+        question: "Como a bioinformática é definida no texto?",
+        answers: [
+          { text: "A disciplina que estuda o comportamento de sistemas biológicos em tempo real.", correct: false },
+          { text: "O campo que usa a ciência da computação para organizar e analisar dados biológicos em larga escala.", correct: true },
+          { text: "A ciência que desenvolve novos medicamentos com base em algoritmos de machine learning.", correct: false },
+          { text: "A área que cria ferramentas de visualização para dados genéticos complexos.", correct: false }
+        ]
+      },
+      {
+        question: "Qual é o papel da ciência de dados na biologia digital?",
+        answers: [
+          { text: "Tornar os dados menos acessíveis para garantir a privacidade.", correct: false },
+          { text: "Ajudar a combater a fake news e a desinformação científica.", correct: false },
+          { text: "Exigir o desenvolvimento de novas ferramentas para lidar com a massiva quantidade de dados.", correct: true },
+          { text: "Criar plataformas para que os entusiastas contribuam para a pesquisa.", correct: false }
+        ]
+      },
+      {
+        question: "O que são os bancos de dados biológicos mencionados no texto?",
+        answers: [
+          { text: "Repositórios de artigos científicos e teses de doutorado.", correct: false },
+          { text: "O coração do compartilhamento de dados, como o GenBank e o PDB.", correct: true },
+          { text: "Ferramentas para simular a evolução de espécies em laboratório.", correct: false },
+          { text: "Dispositivos de armazenamento que contêm amostras de DNA e RNA.", correct: false }
+        ]
+      },
+      {
+        question: "Quais são as habilidades essenciais que o texto destaca para quem trabalha com biologia digital?",
+        answers: [
+          { text: "Apenas conhecimentos em bioinformática e bancos de dados.", correct: false },
+          { text: "Habilidades em programação científica, estatística, bancos biológicos, arquitetura de dados, visualização e ética.", correct: true },
+          { text: "Habilidades em machine learning e desenvolvimento de software.", correct: false },
+          { text: "Apenas o conhecimento de ferramentas como o Python e o R.", correct: false }
+        ]
+      }
+    ];
+
+    const questionElement = document.getElementById("question-text");
+    const answerButtons = document.getElementById("answer-buttons");
+    const nextButton = document.getElementById("next-btn");
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // Função para embaralhar um array (algoritmo de Fisher-Yates)
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      nextButton.innerHTML = "Próxima";
+      // Embaralha as perguntas no início de cada quiz
+      shuffleArray(questions);
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      let currentQuestion = questions[currentQuestionIndex];
+      let questionNo = currentQuestionIndex + 1;
+      questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+      currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn");
+        answerButtons.appendChild(button);
+        if (answer.correct) {
+          button.dataset.correct = answer.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+      });
+    }
+
+    function resetState() {
+      nextButton.style.display = "none";
+      while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+      }
+    }
+
+    function selectAnswer(e) {
+      const selectedBtn = e.target;
+      const isCorrect = selectedBtn.dataset.correct === "true";
+      if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        score++;
+      } else {
+        selectedBtn.classList.add("incorrect");
+      }
+      Array.from(answerButtons.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+          button.classList.add("correct");
+        }
+        button.disabled = true;
+      });
+      nextButton.style.display = "block";
+    }
+
+    function showScore() {
+      resetState();
+      questionElement.innerHTML = `Você acertou ${score} de ${questions.length} perguntas!`;
+      nextButton.innerHTML = "Jogar Novamente";
+      nextButton.style.display = "block";
+    }
+
+    function handleNextButton() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    nextButton.addEventListener("click", () => {
+      if (currentQuestionIndex < questions.length) {
+        handleNextButton();
+      } else {
+        startQuiz();
+      }
+    });
+
+    startQuiz();
+  </script>
+</body>
+</html>
